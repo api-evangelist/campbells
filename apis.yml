@@ -1,7 +1,11 @@
 aid: campbells
-url: https://raw.githubusercontent.com/api-evangelist/campbells/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/campbells/refs/heads/main/apis.yml
 modified: '2026-03-21'
 apis: []
 common:
   - type: Website
     url: https://www.campbells.com
+description: >-
+  For generations, people have trusted Campbell's® Soup to provide authentic, flavorful
+  and readily available soups, meals, and recipes.
