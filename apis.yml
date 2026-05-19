@@ -44,6 +44,8 @@ apis:
       - type: DeveloperPortal
         url: https://developer.campbellskitchen.com/
 common:
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/the-campbells-company
   - type: Website
     url: https://www.campbells.com/
   - type: ParentCompany
