@@ -2,7 +2,7 @@ aid: campbells
 name: Campbell's
 url: >-
   https://raw.githubusercontent.com/api-evangelist/campbells/refs/heads/main/apis.yml
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 type: Index
 tags:
   - Food
