@@ -48,6 +48,11 @@ apis:
     tags:
       - Recipes
       - Nutrition
+      - Product
+      - UPC
+    tags_raw:
+      - Recipes
+      - Nutrition
       - Products
       - UPC
     properties:
