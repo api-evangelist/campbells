@@ -1,0 +1,97 @@
+specification: API Evangelist Discovery Probe
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: probed
+source: >-
+  Live HTTP probes of the WordPress REST API route descriptors served by
+  www.campbells.com and www.thecampbellscompany.com, 2026-09-05.
+description: >-
+  Campbell's publishes no OpenAPI, AsyncAPI, GraphQL, gRPC or WSDL contract and
+  runs no developer portal. It does, however, serve a live, public,
+  unauthenticated WordPress REST API on its own consumer and corporate domains,
+  and WordPress ships a self-describing route descriptor at each namespace root.
+  Those descriptors are the only machine-readable contract Campbell's actually
+  serves, so they are captured here verbatim as fetched. Nothing in this
+  directory was authored or reshaped by the pipeline.
+notes: |
+  The Campbell's Kitchen Developer API (developer.campbellskitchen.com), which the
+  catalog carried as this company's API, no longer resolves in DNS. See
+  lifecycle/campbells-lifecycle.yml for the retirement evidence.
+
+  A second surface exists but could not be reached: api.campbells.com is an
+  Apigee-managed gateway (TLS certificate OV-issued to "The Campbell's Company",
+  CN=api.campbells.com) that answers every path with the Apigee router fault
+  `messaging.adaptors.http.flow.ApplicationNotFound`. Proxies are deployed on
+  basepaths that are not published anywhere, and this pipeline does not guess
+  paths, so the gateway is recorded as observed-but-undocumented rather than
+  catalogued as an API.
+documents:
+  - file: campbells-wp-v2-routes.json
+    url: https://www.campbells.com/wp-json/wp/v2
+    http_status: 200
+    content_type: application/json
+    bytes: 265079
+    format: WordPress REST API route descriptor
+    routes: 134
+    note: >-
+      Namespace index for the consumer site. Carries every route, its HTTP
+      methods, and per-argument type/required/default metadata. Campbell's own
+      custom post types are `recipe`, `product`, `external_product` and
+      `csc_faq`; the `csc_*` taxonomies (Campbell Soup Company) are theirs too.
+  - file: campbells-yrsc-search-v1-routes.json
+    url: https://www.campbells.com/wp-json/yrsc-search/v1
+    http_status: 200
+    content_type: application/json
+    bytes: 1676
+    format: WordPress REST API route descriptor
+    routes: 4
+    note: >-
+      The recipe/product search namespace that powers www.campbells.com/all-recipes/.
+      Backed by Yext (responses carry `yextValue` and `ce_recipe` entity types).
+  - file: campbells-email-sub-v1-routes.json
+    url: https://www.campbells.com/wp-json/email-sub/v1
+    http_status: 200
+    content_type: application/json
+    bytes: 2196
+    format: WordPress REST API route descriptor
+    routes: 4
+    note: >-
+      Email subscription and preference-centre write surface. Documented here for
+      completeness only; it accepts personal data and was NOT exercised beyond
+      reading its route descriptor.
+  - file: thecampbellscompany-wp-v2-routes.json
+    url: https://www.thecampbellscompany.com/wp-json/wp/v2
+    http_status: 200
+    content_type: application/json
+    bytes: 243722
+    format: WordPress REST API route descriptor
+    note: >-
+      Corporate site namespace index. Custom post types are `csc_faq`,
+      `csc_person` and `csc_resource`, with `csc_brand`, `csc_person_group`
+      and `csc_resource_cat` taxonomies.
+misses:
+  - url: https://developer.campbellskitchen.com/
+    http_status: 0
+    note: DNS NXDOMAIN — no A record for developer.campbellskitchen.com.
+  - url: https://www.campbellskitchen.com/
+    http_status: 0
+    note: DNS resolves (20.81.26.235) but the TLS connection is not served.
+  - url: https://api.campbells.com/openapi.json
+    http_status: 404
+    note: >-
+      Apigee router fault; also probed /openapi.yaml, /swagger.json,
+      /v1/openapi.json, /api-docs, /docs, /redoc — all the same fault.
+  - url: https://www.campbells.com/wp-json/
+    http_status: 404
+    note: >-
+      The WordPress REST index route is filtered off, so namespaces cannot be
+      enumerated from the root. The two custom namespaces recorded above were
+      found in the site's own page markup, not guessed.
+  - url: https://www.campbells.com/graphql
+    http_status: 404
+    note: No GraphQL surface.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

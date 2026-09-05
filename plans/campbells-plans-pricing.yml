@@ -4,26 +4,47 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Campbell's
 providerId: campbells
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-09-05'
+generated: '2026-09-05'
+method: searched
+source: >-
+  Searched both Campbell's web properties on 2026-09-05 for developer pricing,
+  plans or a signup path. www.campbells.com and www.thecampbellscompany.com were
+  crawled from their navigation and llms.txt index; developer.campbellskitchen.com,
+  which once carried the developer programme, no longer resolves in DNS.
+reconciled: true
 tags:
   - Food
   - Consumer Packaged Goods
   - Recipes
   - Brands
-description: Campbell's does not publish a public developer API or developer-tier pricing. This artifact
-  is a trimmed scaffold preserving the API Commons Plans structure so downstream tooling can iterate
-  uniformly across providers without fabricated tiers.
+description: >-
+  Campbell's publishes no API plans, no developer pricing and no signup. This is
+  not an enterprise "contact us" gate either — there is no commercial API
+  offering at all. The live content and recipe-search API on www.campbells.com is
+  open and free because it is the consumer website's own backend, not because a
+  free tier was designed.
+plan_count: 0
+plans: []
+access_model:
+  pricing: free
+  metered: false
+  signup_required: false
+  signup_url: null
+  detail: >-
+    Every read endpoint answers anonymously with no key and no quota. Nothing
+    published grants or restricts commercial use of that data, so a consumer is
+    operating without terms.
+evidence:
+  - url: https://developer.campbellskitchen.com/
+    status: 0
+    note: DNS NXDOMAIN — the former developer programme and its pricing are gone.
+  - url: https://www.campbells.com/wp-json/wp/v2/recipe?per_page=1
+    status: 200
+    note: Returned data with no credential and no plan.
 sources:
   - https://www.campbells.com/
-notes: |
-  Campbell's (a brand of The Campbell's Company) does not publish a public, general-purpose developer
-  API or developer pricing. Recipe and brand sites are consumer content properties.
-plans: []
+  - https://www.thecampbellscompany.com/
 maintainers:
-  - FN: API Evangelist
-    url: http://apievangelist.com
-    email: info@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com

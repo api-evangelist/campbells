@@ -1,0 +1,77 @@
+specification: API Commons Lifecycle
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: probed
+source: >-
+  DNS and HTTP probes of the hosts this record carries, plus the
+  provider-served route descriptors in discovery/, 2026-09-05.
+description: >-
+  Campbell's publishes no versioning policy, no deprecation policy, no SLA and
+  no status page. The one lifecycle event this record can establish is a
+  retirement: the Campbell's Kitchen Developer API that this catalog entry was
+  built around no longer exists.
+versioning:
+  scheme: namespace-in-path
+  current:
+    - namespace: wp/v2
+      base: https://www.campbells.com/wp-json/wp/v2
+    - namespace: yrsc-search/v1
+      base: https://www.campbells.com/wp-json/yrsc-search/v1
+    - namespace: email-sub/v1
+      base: https://www.campbells.com/wp-json/email-sub/v1
+  policy_published: false
+  note: >-
+    Version numbers come from the WordPress platform and its plugins, not from a
+    Campbell's versioning commitment. Nothing states what would happen at a v3.
+deprecation:
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  deprecated_operations: []
+  note: >-
+    No Sunset or Deprecation response header was returned on any endpoint, and
+    no deprecation policy page exists.
+retirements:
+  - name: Campbell's Kitchen Developer API
+    status: retired
+    surface: https://developer.campbellskitchen.com/
+    evidence:
+      - probe: DNS A record lookup for developer.campbellskitchen.com
+        result: NXDOMAIN — no address record
+        checked: '2026-09-05'
+      - probe: HTTPS GET https://developer.campbellskitchen.com/
+        result: connection could not be established (curl exit 6, no resolution)
+        checked: '2026-09-05'
+      - probe: HTTPS GET https://www.campbellskitchen.com/
+        result: >-
+          DNS resolves to 20.81.26.235 but TLS is not served; plain HTTP to
+          campbellskitchen.com 301s into https://www.campbells.com/recipes/,
+          which then answers 403 to a redirect-following crawler.
+        checked: '2026-09-05'
+    note: >-
+      This API — recipes, products, UPC lookup, photography, ratings and
+      Nutrition Facts data across Campbell's, Swanson, Pace, Prego and
+      Pepperidge Farm — was the basis of this catalog entry. It was withdrawn
+      with no sunset notice this pipeline can find, and its brand domain now
+      redirects into the consumer recipe site. The recipe and product data it
+      served is still reachable, unauthenticated, through the WordPress content
+      API recorded in discovery/ — but as a side effect of how the website is
+      built, not as a product with a contract behind it.
+status_page:
+  published: false
+  probes:
+    - url: https://status.campbells.com/
+      status: 0
+      note: DNS does not resolve.
+sla:
+  published: false
+support:
+  channel: https://www.campbells.com/contact-us/
+  http_status: 200
+  note: Consumer contact form. There is no developer support channel.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

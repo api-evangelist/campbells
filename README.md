@@ -64,49 +64,112 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Campbell's (Campbell Soup Company, now The Campbell's Company) is the consumer brand trusted for generations to provide authentic, flavourful, and readily available soups, meals, and recipes. Alongside its consumer website, Campbell's has historically operated a Campbell's Kitchen Developer API that let developers embed Campbell's, Swanson, Pace, Prego, and Pepperidge Farm recipes, products, and nutrition data into their own web and mobile experiences.
+Campbell's (Campbell Soup Company, now The Campbell's Company) is the consumer brand trusted for generations to provide authentic, flavourful, and readily available soups, meals, and recipes. It ran a Campbell's Kitchen Developer API that let developers embed Campbell's, Swanson, Pace, Prego and Pepperidge Farm recipes, products, nutrition and UPC data into their own applications; that programme has been retired and its developer domain no longer resolves. What Campbell's still serves is a live, public, unauthenticated content and recipe-search API on www.campbells.com — 316 recipes, 210 products, 85 recipe collections and 36 FAQs behind the WordPress REST namespaces the site is built on — plus a separately-hosted corporate content API. There is no developer portal, no documentation, no contract and no terms governing any of it.
 
 **URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/campbells/refs/heads/main/apis.yml)
 
 ## Scope
 
 - **Type:** Index
-- **Position:** Provider
+- **Position:** Producing
 - **Access:** 3rd-Party
 
 ## Tags
 
- - Food, Consumer Packaged Goods, Recipes, Brands
+ - Food, Consumer Packaged Goods, Recipes, Brands, Nutrition, Content, Product Catalog, WordPress
 
 ## Timestamps
 
 - **Created:** 2026-03-21
-- **Modified:** 2026-04-23
+- **Modified:** 2026-09-05
 
 ## APIs
 
-### Campbell's Kitchen API
+### Campbell's Content API
 
-The Campbell's Kitchen API exposes recipe and product data from Campbell's consumer brands — including Campbell's, Swanson, Pace, Prego, and Pepperidge Farm — for use in search-based recipe and product applications. The API returns recipes, ingredients, product details, UPC lookups, photography, ratings, and updated Nutrition Facts panel data.
+The public WordPress REST API behind www.campbells.com, exposing Campbell's own content types — recipe (316), product (210), external_product and csc_faq (36) — together with six Campbell's taxonomies covering recipe collections, product category, product line, product tag, main ingredient and dietary alternative. Every read endpoint answers anonymously with no key. Campbell's publishes no OpenAPI and no documentation for it; the route descriptor and per-resource JSON Schema captured in this repo were fetched from the API itself.
 
-**Human URL:** [https://developer.campbellskitchen.com/](https://developer.campbellskitchen.com/)
+**Human URL:** [https://www.campbells.com/](https://www.campbells.com/)
+
+**Base URL:** `https://www.campbells.com/wp-json/wp/v2`
 
 #### Tags
 
- - Recipes, Nutrition, Products, UPC
+ - Recipes, Products, Nutrition, Content
 
 #### Properties
 
-- [Documentation](https://developer.campbellskitchen.com/documentation/api-overview)
-- [Developer Portal](https://developer.campbellskitchen.com/)
+- [JSONSchema](json-schema/_index.yml)
+- [x-RouteDescriptor](discovery/campbells-wp-v2-routes.json)
+- [DataModel](data-model/campbells-data-model.yml)
+- [AgentSkill](skills/campbells-product-catalog.md)
+
+### Campbell's Recipe Search API
+
+The yrsc-search/v1 namespace on www.campbells.com that powers the site's recipe and product search. Three public endpoints — query (term, limit, offset, sort, filters, facetFilters, retrieveFacets, vertical, mode), autocomplete (term required) and featured-collections. Responses are Yext-backed, returning flattened recipe summaries with times and servings alongside the raw ce_recipe entity. No credential required and no documentation published.
+
+**Human URL:** [https://www.campbells.com/all-recipes/](https://www.campbells.com/all-recipes/)
+
+**Base URL:** `https://www.campbells.com/wp-json/yrsc-search/v1`
+
+#### Tags
+
+ - Search, Recipes, Autocomplete
+
+#### Properties
+
+- [x-RouteDescriptor](discovery/campbells-yrsc-search-v1-routes.json)
+- [AgentSkill](skills/campbells-recipe-search.md)
+
+### The Campbell's Company Corporate Content API
+
+The public WordPress REST API behind the corporate site www.thecampbellscompany.com, carrying csc_faq, csc_person and csc_resource content types with csc_brand, csc_person_group, csc_resource_cat and csc_topic taxonomies. Same posture as the consumer surface — live, anonymous, undocumented.
+
+**Human URL:** [https://www.thecampbellscompany.com/](https://www.thecampbellscompany.com/)
+
+**Base URL:** `https://www.thecampbellscompany.com/wp-json/wp/v2`
+
+#### Tags
+
+ - Corporate, Content, People
+
+#### Properties
+
+- [x-RouteDescriptor](discovery/thecampbellscompany-wp-v2-routes.json)
 
 ## Common Properties
 
 - [Website](https://www.campbells.com/)
-- [Parent Company](https://www.thecampbellscompany.com/)
-- [Recipes](https://www.campbells.com/recipes/)
-- [Products](https://www.campbells.com/products/)
-- [Developer Portal](https://developer.campbellskitchen.com/)
+- [ParentCompany](https://www.thecampbellscompany.com/)
+- [LinkedIn](https://www.linkedin.com/company/the-campbells-company)
+- [x-Recipes](https://www.campbells.com/recipes/)
+- [x-Products](https://www.campbells.com/products/)
+- [Support](https://www.campbells.com/contact-us/)
+- [HelpCenter](https://www.campbells.com/faqs/)
+- [TermsOfService](https://www.thecampbellscompany.com/terms-of-use/)
+- [PrivacyPolicy](https://www.thecampbellscompany.com/privacy-policy/)
+- [LLMsTxt](llms/campbells-llms.txt)
+- [Authentication](authentication/campbells-authentication.yml)
+- [Conventions](conventions/campbells-conventions.yml)
+- [ErrorCatalog](errors/campbells-problem-types.yml)
+- [Lifecycle](lifecycle/campbells-lifecycle.yml)
+- [Conformance](conformance/campbells-conformance.yml)
+- [DataModel](data-model/campbells-data-model.yml)
+- [RateLimits](rate-limits/campbells-rate-limits.yml)
+- [Plans](plans/campbells-plans-pricing.yml)
+- [Packages](packages/campbells-packages.yml)
+- [AgentSkill](skills/_index.yml)
+- [x-Discovery](discovery/campbells-discovery.yml)
+- [DomainSecurity](security/campbells-domain-security.yml)
+
+## Enrichment
+
+Campbell's retired the Campbell's Kitchen Developer API — `developer.campbellskitchen.com` no
+longer resolves in DNS. It does still serve a live, public, unauthenticated content and
+recipe-search API on its own consumer and corporate sites, with no portal, no documentation,
+no OpenAPI, no plan and no terms. The route descriptors and JSON Schema documents in
+`discovery/` and `json-schema/` were fetched from that API itself and are saved verbatim;
+everything derived from them says so in its own `method:` field.
 
 ## Maintainers
 

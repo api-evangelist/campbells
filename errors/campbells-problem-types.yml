@@ -1,0 +1,76 @@
+specification: API Commons Error Catalog
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: probed
+source: >-
+  Every entry below was elicited from a real request against
+  https://www.campbells.com/wp-json/ on 2026-09-05 and the response body copied
+  as returned. Campbell's publishes no error reference, so nothing here is
+  transcribed from documentation.
+description: >-
+  Error catalogue for the Campbell's content and recipe-search APIs. The
+  envelope is the WordPress REST shape, not RFC 9457 — there is no `type` URI,
+  no `title`/`detail` split and no application/problem+json media type.
+format: wordpress-rest
+rfc9457: false
+content_type: application/json; charset=UTF-8
+envelope:
+  code: Machine-readable string identifier, e.g. rest_invalid_param.
+  message: Human-readable sentence, localised to the site locale.
+  data.status: Integer repeating the HTTP status code.
+  data.params: Present on parameter errors — the offending parameter names.
+  data.details: Present on parameter errors — per-parameter explanation.
+problem_types:
+  - code: rest_no_route
+    http_status: 404
+    message: No route was found matching the URL and request method.
+    observed_at: https://www.campbells.com/wp-json/
+    remediation: >-
+      The REST index route is filtered off on this install, so /wp-json/ itself
+      404s even though the namespaces below it are live. Address a namespace
+      root directly (/wp-json/wp/v2) instead of the index.
+  - code: rest_post_invalid_id
+    http_status: 404
+    message: Invalid post ID.
+    observed_at: https://www.campbells.com/wp-json/wp/v2/recipe/999999999
+    remediation: The requested resource id does not exist in this collection.
+  - code: rest_invalid_param
+    http_status: 400
+    message: 'Invalid parameter(s): per_page'
+    observed_at: https://www.campbells.com/wp-json/wp/v2/recipe?per_page=500
+    detail: >-
+      data.details carries the bound that was violated — "per_page must be
+      between 1 (inclusive) and 100 (inclusive)".
+    remediation: Clamp per_page to 1-100 and page through with page= or offset=.
+  - code: rest_missing_callback_param
+    http_status: 400
+    message: 'Missing parameter(s): term'
+    observed_at: https://www.campbells.com/wp-json/yrsc-search/v1/autocomplete
+    detail: data.params lists the required parameters that were absent.
+    remediation: Supply every argument the route descriptor marks required:true.
+  - code: rest_forbidden
+    http_status: 401
+    message: Sorry, you are not allowed to do that.
+    observed_at: https://www.campbells.com/wp-json/wp/v2/settings
+    remediation: >-
+      The route requires an authenticated WordPress user. No outside developer
+      can obtain a credential — there is no signup and no developer programme.
+  - code: rest_cannot_view_plugins
+    http_status: 401
+    message: Sorry, you are not allowed to manage plugins for this site.
+    observed_at: https://www.campbells.com/wp-json/wp/v2/plugins
+    remediation: Administrative route; not reachable by a public consumer.
+gateway_errors:
+  - code: messaging.adaptors.http.flow.ApplicationNotFound
+    http_status: 404
+    message: 'Unable to identify proxy for host: <id> and url: <path>'
+    observed_at: https://api.campbells.com/
+    detail: >-
+      Apigee router fault returned for every path probed on api.campbells.com.
+      A different error surface from the WordPress one, belonging to a gateway
+      whose proxies are not publicly documented.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

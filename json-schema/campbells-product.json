@@ -1,0 +1,470 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "product",
+  "type": "object",
+  "properties": {
+    "date": {
+      "description": "The date the post was published, in the site's timezone.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "context": [
+        "view",
+        "edit",
+        "embed"
+      ]
+    },
+    "date_gmt": {
+      "description": "The date the post was published, as GMT.",
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "guid": {
+      "description": "The globally unique identifier for the post.",
+      "type": "object",
+      "context": [
+        "view",
+        "edit"
+      ],
+      "readonly": true,
+      "properties": {
+        "raw": {
+          "description": "GUID for the post, as it exists in the database.",
+          "type": "string",
+          "context": [
+            "edit"
+          ],
+          "readonly": true
+        },
+        "rendered": {
+          "description": "GUID for the post, transformed for display.",
+          "type": "string",
+          "context": [
+            "view",
+            "edit"
+          ],
+          "readonly": true
+        }
+      }
+    },
+    "id": {
+      "description": "Unique identifier for the post.",
+      "type": "integer",
+      "context": [
+        "view",
+        "edit",
+        "embed"
+      ],
+      "readonly": true
+    },
+    "link": {
+      "description": "URL to the post.",
+      "type": "string",
+      "format": "uri",
+      "context": [
+        "view",
+        "edit",
+        "embed"
+      ],
+      "readonly": true
+    },
+    "modified": {
+      "description": "The date the post was last modified, in the site's timezone.",
+      "type": "string",
+      "format": "date-time",
+      "context": [
+        "view",
+        "edit"
+      ],
+      "readonly": true
+    },
+    "modified_gmt": {
+      "description": "The date the post was last modified, as GMT.",
+      "type": "string",
+      "format": "date-time",
+      "context": [
+        "view",
+        "edit"
+      ],
+      "readonly": true
+    },
+    "slug": {
+      "description": "An alphanumeric identifier for the post unique to its type.",
+      "type": "string",
+      "context": [
+        "view",
+        "edit",
+        "embed"
+      ]
+    },
+    "status": {
+      "description": "A named status for the post.",
+      "type": "string",
+      "enum": [
+        "acf-disabled",
+        "private",
+        "pending",
+        "draft",
+        "future",
+        "publish"
+      ],
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "type": {
+      "description": "Type of post.",
+      "type": "string",
+      "context": [
+        "view",
+        "edit",
+        "embed"
+      ],
+      "readonly": true
+    },
+    "password": {
+      "description": "A password to protect access to the content and excerpt.",
+      "type": "string",
+      "context": [
+        "edit"
+      ]
+    },
+    "permalink_template": {
+      "description": "Permalink template for the post.",
+      "type": "string",
+      "context": [
+        "edit"
+      ],
+      "readonly": true
+    },
+    "generated_slug": {
+      "description": "Slug automatically generated from the post title.",
+      "type": "string",
+      "context": [
+        "edit"
+      ],
+      "readonly": true
+    },
+    "class_list": {
+      "description": "An array of the class names for the post container element.",
+      "type": "array",
+      "context": [
+        "view",
+        "edit"
+      ],
+      "readonly": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "title": {
+      "description": "The title for the post.",
+      "type": "object",
+      "context": [
+        "view",
+        "edit",
+        "embed"
+      ],
+      "properties": {
+        "raw": {
+          "description": "Title for the post, as it exists in the database.",
+          "type": "string",
+          "context": [
+            "edit"
+          ]
+        },
+        "rendered": {
+          "description": "HTML title for the post, transformed for display.",
+          "type": "string",
+          "context": [
+            "view",
+            "edit",
+            "embed"
+          ],
+          "readonly": true
+        }
+      }
+    },
+    "featured_media": {
+      "description": "The ID of the featured media for the post.",
+      "type": "integer",
+      "context": [
+        "view",
+        "edit",
+        "embed"
+      ]
+    },
+    "template": {
+      "description": "The theme file to use to display the post.",
+      "type": "string",
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "csc_dietary_alternative": {
+      "description": "The terms assigned to the post in the csc_dietary_alternative taxonomy.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "csc_main_ingredient": {
+      "description": "The terms assigned to the post in the csc_main_ingredient taxonomy.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "csc_product_cat": {
+      "description": "The terms assigned to the post in the csc_product_cat taxonomy.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "csc_product_line": {
+      "description": "The terms assigned to the post in the csc_product_line taxonomy.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "csc_product_tag": {
+      "description": "The terms assigned to the post in the csc_product_tag taxonomy.",
+      "type": "array",
+      "items": {
+        "type": "integer"
+      },
+      "context": [
+        "view",
+        "edit"
+      ]
+    },
+    "acf": {
+      "description": "ACF field data",
+      "type": "object",
+      "properties": []
+    }
+  },
+  "links": [
+    {
+      "rel": "https://api.w.org/action-publish",
+      "title": "The current user can publish this post.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "publish",
+              "future"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-unfiltered-html",
+      "title": "The current user can post unfiltered HTML markup and JavaScript.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "content": {
+            "raw": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-assign-csc_dietary_alternative",
+      "title": "The current user can assign terms in the csc_dietary_alternative taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_dietary_alternative": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-create-csc_dietary_alternative",
+      "title": "The current user can create terms in the csc_dietary_alternative taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_dietary_alternative": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-assign-csc_main_ingredient",
+      "title": "The current user can assign terms in the csc_main_ingredient taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_main_ingredient": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-create-csc_main_ingredient",
+      "title": "The current user can create terms in the csc_main_ingredient taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_main_ingredient": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-assign-csc_product_cat",
+      "title": "The current user can assign terms in the csc_product_cat taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_product_cat": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-create-csc_product_cat",
+      "title": "The current user can create terms in the csc_product_cat taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_product_cat": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-assign-csc_product_line",
+      "title": "The current user can assign terms in the csc_product_line taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_product_line": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-create-csc_product_line",
+      "title": "The current user can create terms in the csc_product_line taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_product_line": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-assign-csc_product_tag",
+      "title": "The current user can assign terms in the csc_product_tag taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_product_tag": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    },
+    {
+      "rel": "https://api.w.org/action-create-csc_product_tag",
+      "title": "The current user can create terms in the csc_product_tag taxonomy.",
+      "href": "https://www.campbells.com/wp-json/wp/v2/product/{id}",
+      "targetSchema": {
+        "type": "object",
+        "properties": {
+          "csc_product_tag": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  ]
+}

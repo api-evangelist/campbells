@@ -3,30 +3,63 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Campbell's
 providerId: campbells
+providerId_note: supersedes the 2026-05-04 bulk-sweep scaffold, which predated discovery of the live API
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-05'
-reconciled: false
+modified: '2026-09-05'
+generated: '2026-09-05'
+method: probed
+source: >-
+  Live requests against https://www.campbells.com/wp-json/ on 2026-09-05,
+  including repeated rapid calls, with every response header read.
+reconciled: true
 tags:
   - Food
   - Consumer Packaged Goods
   - Recipes
   - Brands
   - Rate Limiting
-description: Campbell's does not publish a public developer API, so no programmatic rate limits are documented.
-  This artifact preserves the API Commons Rate Limits structure with empty limits and a note explaining
-  the absence of public API throttling policy.
-sources:
-  - https://www.campbells.com/
-notes: |
-  Campbell's (a brand of The Campbell's Company) does not publish a public, general-purpose developer
-  API or developer pricing.
-responseCodes: {}
+description: >-
+  Campbell's documents no rate limits and returns no rate-limit headers. The
+  public content and recipe-search API answered every request, including rapid
+  repeats, with no throttling signal of any kind. This is an honest zero: the
+  limits may well exist at the Cloudflare edge, but nothing tells a client what
+  they are or when to retry.
+limit_count: 0
 limits: []
 policies: []
+observed_headers:
+  rate_limit_headers: []
+  retry_after: false
+  detail: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was returned on any
+    response. Headers that ARE returned: server: cloudflare, cf-ray,
+    cf-cache-status, x-cacheable, x-cache, x-cache-group, and — on collection
+    routes — X-WP-Total, X-WP-TotalPages and Link rel="next".
+  exhaustion_status: unknown
+  note: >-
+    Cloudflare fronts the origin, so a bot-management or WAF response (403 / 429)
+    is plausible under load. None was observed and none is documented, so no
+    behaviour is asserted here.
+enforced_bounds:
+  - parameter: per_page
+    scope: every WordPress collection route
+    bound: 1-100 inclusive
+    on_violation: HTTP 400, code rest_invalid_param, with data.details.per_page
+    evidence: GET /wp-json/wp/v2/recipe?per_page=500
+    note: >-
+      A payload bound rather than a rate limit, but it is the only published
+      quantitative constraint on this API, so it is recorded here.
+robots_txt:
+  url: https://www.campbells.com/robots.txt
+  http_status: 200
+  crawl_delay: 10
+  note: >-
+    robots.txt asks all user agents for a 10-second crawl delay (120 seconds for
+    Sogou) and disallows only /wp-admin/. This is the nearest thing Campbell's
+    publishes to a stated pace, and an automated consumer should honour it.
+sources:
+  - https://www.campbells.com/wp-json/wp/v2/recipe
+  - https://www.campbells.com/robots.txt
 maintainers:
-  - FN: API Evangelist
-    url: http://apievangelist.com
-    email: info@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com

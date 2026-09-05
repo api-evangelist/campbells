@@ -1,0 +1,89 @@
+specification: API Commons MCP Server
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: derived
+status: candidate
+source: >-
+  Derived from the provider-served route descriptors in
+  discovery/campbells-wp-v2-routes.json and
+  discovery/campbells-yrsc-search-v1-routes.json. Every tool below maps to a
+  route this pipeline called successfully on 2026-09-05.
+description: >-
+  Campbell's runs no MCP server. This is a CANDIDATE tool set showing what a
+  server over the live public Campbell's content and recipe-search API would
+  expose — nothing here is deployed, and no MCPServer pointer is wired into
+  apis.yml, because the surface does not exist.
+deployment:
+  mode: none
+  endpoint: null
+  install: null
+  package: null
+  auth: none
+  verified: derived
+  note: >-
+    No hosted endpoint, no stdio package, no MCP mention on either Campbell's
+    domain. The underlying REST surface needs no credential, so a server built
+    on it would need none either.
+candidate_tools:
+  - name: search_recipes
+    description: Full-text and faceted search across Campbell's recipes and products.
+    rest: GET /wp-json/yrsc-search/v1/query
+    parameters: [term, limit, offset, sort, filters, facetFilters, retrieveFacets, vertical, mode]
+    verified_call: https://www.campbells.com/wp-json/yrsc-search/v1/query?term=soup&limit=2
+    http_status: 200
+  - name: autocomplete_recipes
+    description: Type-ahead suggestions for recipe and product names.
+    rest: GET /wp-json/yrsc-search/v1/autocomplete
+    parameters: [term, limit, vertical, mode]
+    verified_call: https://www.campbells.com/wp-json/yrsc-search/v1/autocomplete?term=tomato
+    http_status: 200
+  - name: list_featured_collections
+    description: The recipe collections Campbell's is currently featuring.
+    rest: GET /wp-json/yrsc-search/v1/featured-collections
+    parameters: []
+    verified_call: https://www.campbells.com/wp-json/yrsc-search/v1/featured-collections
+    http_status: 200
+  - name: list_recipes
+    description: Page the recipe catalogue with filters, ordering and sparse fields.
+    rest: GET /wp-json/wp/v2/recipe
+    parameters: [page, per_page, offset, search, slug, include, exclude, order, orderby, before, after, modified_before, modified_after, csc_recipe_collection, _fields, _embed]
+    verified_call: https://www.campbells.com/wp-json/wp/v2/recipe?per_page=1
+    http_status: 200
+  - name: get_recipe
+    description: Fetch one recipe by id.
+    rest: GET /wp-json/wp/v2/recipe/{id}
+    parameters: [id, _fields, _embed]
+  - name: list_products
+    description: Page the product catalogue, filtered by any of the five csc_* taxonomies.
+    rest: GET /wp-json/wp/v2/product
+    parameters: [page, per_page, search, csc_product_cat, csc_product_line, csc_product_tag, csc_main_ingredient, csc_dietary_alternative, _fields]
+    verified_call: https://www.campbells.com/wp-json/wp/v2/product?per_page=1&_fields=id,slug,link
+    http_status: 200
+  - name: get_product
+    description: Fetch one product by id.
+    rest: GET /wp-json/wp/v2/product/{id}
+    parameters: [id, _fields]
+  - name: list_recipe_collections
+    description: The 85 curated recipe collections and their recipe counts.
+    rest: GET /wp-json/wp/v2/csc_recipe_collection
+    parameters: [page, per_page, search, slug]
+    verified_call: https://www.campbells.com/wp-json/wp/v2/csc_recipe_collection?per_page=2
+    http_status: 200
+  - name: list_faqs
+    description: Campbell's consumer FAQ entries, classified by topic.
+    rest: GET /wp-json/wp/v2/csc_faq
+    parameters: [page, per_page, search, csc_topic]
+    verified_call: https://www.campbells.com/wp-json/wp/v2/csc_faq?per_page=1
+    http_status: 200
+excluded_from_candidate:
+  - rest: POST /wp-json/email-sub/v1/emailsubscribe
+    reason: >-
+      Accepts personal data (email, first/last name, zip) and has no documented
+      reversal. Deliberately left out of any agent tool surface.
+  - rest: POST /wp-json/wp/v2/{type}
+    reason: Authenticated editorial write; no outside caller can hold a credential.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

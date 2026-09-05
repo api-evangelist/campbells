@@ -1,0 +1,34 @@
+specification: API Evangelist Agent Skills Index
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: generated
+source: >-
+  Written from the provider-served route descriptors in discovery/ and the
+  OPTIONS schemas in json-schema/. Every request illustrated in these skills was
+  executed against the live API on 2026-09-05 and returned the status recorded.
+description: >-
+  Two packaged agent skills for the public Campbell's content and recipe-search
+  API. Campbell's publishes no OpenAPI, so these are grounded in method+path
+  operations verified by live call rather than in operationIds. They also carry
+  the standing caution that this surface is a website backend, not a supported
+  developer product.
+skills:
+  - name: campbells-recipe-search
+    file: campbells-recipe-search.md
+    api: campbells:campbells-recipe-search-api
+    operations: 6
+    summary: Search, autocomplete, browse collections and page the 316-recipe catalogue.
+  - name: campbells-product-catalog
+    file: campbells-product-catalog.md
+    api: campbells:campbells-content-api
+    operations: 10
+    summary: Page 210 products, filter by five taxonomies, read FAQs, resolve the type registry.
+provider_published_skills: none
+note: >-
+  No AGENTS.md, skills/ directory or agent instructions of any kind are
+  published on either Campbell's domain.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,83 @@
+specification: API Commons Well-Known
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: probed
+source: >-
+  Direct HTTPS probes of the named /.well-known/ path list on every host this
+  record knows, 2026-09-05.
+description: >-
+  Campbell's serves no /.well-known/ discovery document on any host. Every path
+  probed returned 404. On www.campbells.com and www.thecampbellscompany.com the
+  WordPress 404 template answers with a ~97KB / ~68KB HTML page rather than a
+  document, and on api.campbells.com the Apigee router answers with its JSON
+  routing fault. A recorded absence is valid data — no WellKnown or SecurityTxt
+  pointer is emitted for this repo, because nothing was served.
+hosts:
+  - host: www.campbells.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: www.thecampbellscompany.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/openid-configuration
+        status: 404
+        file: null
+      - path: /.well-known/oauth-authorization-server
+        status: 404
+        file: null
+      - path: /.well-known/api-catalog
+        status: 404
+        file: null
+      - path: /.well-known/ai-plugin.json
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+      - path: /.well-known/agent.json
+        status: 404
+        file: null
+  - host: api.campbells.com
+    documents:
+      - path: /.well-known/security.txt
+        status: 404
+        file: null
+      - path: /.well-known/agent-card.json
+        status: 404
+        file: null
+notes: |
+  All 404 bodies were read, not just their status codes. The WordPress hosts
+  return the site 404 template (text/html, `<title>Page not found</title>`), and
+  api.campbells.com returns
+  {"fault":{"faultstring":"Unable to identify proxy for host: ... and url: ..."}}.
+  Neither is a document, so neither earns a pointer.
+
+  developer.campbellskitchen.com could not be probed at all: the hostname has no
+  DNS A record.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

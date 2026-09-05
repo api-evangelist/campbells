@@ -1,0 +1,54 @@
+specification: API Commons Packages
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: searched
+source: >-
+  Registry searches against registry.npmjs.org, pypi.org and rubygems.org on
+  2026-09-05, plus a search of both Campbell's web properties for an SDK or
+  client-library page.
+description: >-
+  Campbell's ships no first-party client library on any package registry. The
+  company has no developer programme, no SDK page and no GitHub organisation, so
+  there is nothing to record beyond the absence and one name collision that a
+  future round should not mistake for a Campbell's SDK.
+package_count: 0
+official_package_count: 0
+packages: []
+near_misses:
+  - registry: pypi
+    name: campbells
+    url: https://pypi.org/project/campbells/
+    version: 0.3.0
+    published: null
+    official: false
+    reason: >-
+      NOT Campbell's. "A condensed web scraping library" — a third-party
+      BeautifulSoup fork by github.com/lmmx, named as a soup pun. Recorded so a
+      later pass does not claim it as a first-party SDK.
+  - registry: npm
+    name: null
+    version: null
+    published: null
+    official: false
+    reason: >-
+      Searches for "campbells", "campbellsoup", "campbells-kitchen" and
+      "campbells-api" returned no package published by or for Campbell's.
+  - registry: rubygems
+    name: campbells
+    version: null
+    published: null
+    official: false
+    reason: HTTP 404 — no gem by that name exists.
+github:
+  organization: null
+  note: >-
+    github.com/campbells is a personal account belonging to "Campbell Strong"
+    (GitHub user type User, 6 repos) and github.com/campbellsoup is an unrelated
+    user account with 1 repo. github.com/thecampbellscompany returns 404.
+    Verified via api.github.com/users/<login>. No GitHubOrganization pointer is
+    emitted.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

@@ -1,0 +1,51 @@
+specification: API Commons JSON Schema Index
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: probed
+source: >-
+  HTTP OPTIONS against each Campbell's custom post-type collection on
+  https://www.campbells.com/wp-json/wp/v2/, 2026-09-05. Each file is the
+  `schema` object from the provider's own OPTIONS response, saved verbatim.
+description: >-
+  WordPress serves a JSON Schema document for every registered resource via an
+  OPTIONS request against its collection route. These four are the schemas for
+  Campbell's own content types — they are provider-served, not derived, and
+  describe the exact JSON the public read endpoints return.
+schemas:
+  - file: campbells-recipe.json
+    title: recipe
+    source: https://www.campbells.com/wp-json/wp/v2/recipe
+    http_status: 200
+    properties: 19
+    collection_size: 316
+    note: >-
+      Recipe resource. Custom fields ship under `acf`; collection membership
+      under `csc_recipe_collection`.
+  - file: campbells-product.json
+    title: product
+    source: https://www.campbells.com/wp-json/wp/v2/product
+    http_status: 200
+    properties: 23
+    collection_size: 210
+    note: >-
+      Product resource, classified by five Campbell's taxonomies —
+      csc_product_cat, csc_product_line, csc_product_tag, csc_main_ingredient
+      and csc_dietary_alternative.
+  - file: campbells-external-product.json
+    title: external_product
+    source: https://www.campbells.com/wp-json/wp/v2/external_product
+    http_status: 200
+    properties: 22
+    note: Products carried on external retail destinations.
+  - file: campbells-csc-faq.json
+    title: csc_faq
+    source: https://www.campbells.com/wp-json/wp/v2/csc_faq
+    http_status: 200
+    properties: 17
+    collection_size: 36
+    note: Consumer FAQ entries, classified by the csc_topic taxonomy.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

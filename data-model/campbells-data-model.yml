@@ -1,0 +1,117 @@
+specification: API Commons Data Model
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: derived
+source: >-
+  json-schema/*.json (provider-served OPTIONS schemas) and
+  discovery/campbells-wp-v2-routes.json. Relationships are read from the
+  taxonomy properties the provider's own schemas declare, plus the
+  /wp/v2/types registry.
+description: >-
+  Entity graph for the Campbell's content API. Four content entities — recipe,
+  product, external_product and csc_faq — related to six Campbell's taxonomies
+  and to WordPress media. Every edge below is declared in a provider-served
+  schema; none is inferred from naming.
+entities:
+  - name: recipe
+    collection: /wp/v2/recipe
+    count: 316
+    id_field: id
+    schema: json-schema/campbells-recipe.json
+    key_fields: [id, slug, title, link, date, modified, featured_media, acf, csc_recipe_collection]
+    relationships:
+      - type: has_many
+        target: csc_recipe_collection
+        via: csc_recipe_collection
+      - type: has_one
+        target: media
+        via: featured_media
+  - name: product
+    collection: /wp/v2/product
+    count: 210
+    id_field: id
+    schema: json-schema/campbells-product.json
+    key_fields: [id, slug, title, link, acf, csc_product_cat, csc_product_line, csc_product_tag, csc_main_ingredient, csc_dietary_alternative]
+    relationships:
+      - type: has_many
+        target: csc_product_cat
+        via: csc_product_cat
+      - type: has_many
+        target: csc_product_line
+        via: csc_product_line
+      - type: has_many
+        target: csc_product_tag
+        via: csc_product_tag
+      - type: has_many
+        target: csc_main_ingredient
+        via: csc_main_ingredient
+      - type: has_many
+        target: csc_dietary_alternative
+        via: csc_dietary_alternative
+      - type: has_one
+        target: media
+        via: featured_media
+  - name: external_product
+    collection: /wp/v2/external_product
+    id_field: id
+    schema: json-schema/campbells-external-product.json
+    relationships:
+      - type: has_one
+        target: media
+        via: featured_media
+    note: Products fulfilled on external retail destinations; carries no csc_* taxonomy.
+  - name: csc_faq
+    collection: /wp/v2/csc_faq
+    count: 36
+    id_field: id
+    schema: json-schema/campbells-csc-faq.json
+    relationships:
+      - type: has_many
+        target: csc_topic
+        via: csc_topic
+  - name: media
+    collection: /wp/v2/media
+    id_field: id
+    note: WordPress core attachment entity; referenced by featured_media on every content type.
+taxonomies:
+  - name: csc_recipe_collection
+    collection: /wp/v2/csc_recipe_collection
+    terms: 85
+    applies_to: [recipe]
+  - name: csc_product_cat
+    collection: /wp/v2/csc_product_cat
+    applies_to: [product]
+  - name: csc_product_line
+    collection: /wp/v2/csc_product_line
+    applies_to: [product]
+  - name: csc_product_tag
+    collection: /wp/v2/csc_product_tag
+    applies_to: [product]
+  - name: csc_main_ingredient
+    collection: /wp/v2/csc_main_ingredient
+    applies_to: [product]
+  - name: csc_dietary_alternative
+    collection: /wp/v2/csc_dietary_alternative
+    applies_to: [product]
+  - name: csc_topic
+    collection: /wp/v2/csc_topic
+    applies_to: [csc_faq]
+corporate_site:
+  host: www.thecampbellscompany.com
+  source: discovery/thecampbellscompany-wp-v2-routes.json
+  entities: [csc_faq, csc_person, csc_resource]
+  taxonomies: [csc_brand, csc_person_group, csc_resource_cat, csc_topic]
+  note: >-
+    A second, separately-hosted content model on the corporate domain. Recorded
+    for completeness; its OPTIONS schemas were not harvested this round.
+notes: |
+  `acf` is an Advanced Custom Fields container. Its inner shape is not declared
+  in the OPTIONS schema (the schema types it as an object), so the per-recipe
+  fields — ingredients, steps, times, nutrition — are not enumerated here. They
+  ARE present in the response body and are additionally published as schema.org
+  Recipe JSON-LD on each recipe page; see conformance/campbells-conformance.yml.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

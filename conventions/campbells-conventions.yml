@@ -1,0 +1,161 @@
+specification: API Commons Conventions
+specificationVersion: '0.1'
+provider: Campbell's
+providerId: campbells
+generated: '2026-09-05'
+method: probed
+source: >-
+  Derived from the provider-served route descriptors in discovery/ and from
+  live request/response observation against
+  https://www.campbells.com/wp-json/ on 2026-09-05. Every header and error
+  shape below was seen on a real response; none is assumed from the platform.
+description: >-
+  Cross-cutting runtime semantics for the Campbell's content and recipe-search
+  APIs. Campbell's publishes no developer documentation, so everything here was
+  established by calling the API and by reading the route descriptors WordPress
+  serves. It is the platform's convention set, adopted by Campbell's, not a
+  contract Campbell's has committed to.
+auth:
+  style: none-for-read
+  detail: >-
+    Every read endpoint exercised returned 200 with no credential. Privileged
+    WordPress routes reject anonymously with HTTP 401 and code `rest_forbidden`
+    (/wp/v2/settings) or `rest_cannot_view_plugins` (/wp/v2/plugins). The route
+    descriptor exposes /wp/v2/users/(me|<id>)/application-passwords, so the
+    platform's application-password scheme is registered, but no credential is
+    issuable by an outside developer because there is no signup.
+  see: authentication/campbells-authentication.yml
+pagination:
+  style: page-number
+  params:
+    - name: page
+      description: 1-indexed page number.
+    - name: per_page
+      description: Page size. Enforced range 1-100; 500 returns 400 rest_invalid_param.
+    - name: offset
+      description: Alternative absolute offset, accepted alongside page.
+  response_headers:
+    - X-WP-Total
+    - X-WP-TotalPages
+    - Link (rel="next" / rel="prev")
+  note: >-
+    Observed on GET /wp/v2/recipe: X-WP-Total 316, X-WP-TotalPages 316 at
+    per_page=1, plus a Link header carrying rel="next". All three headers are
+    named in access-control-expose-headers, so a browser client can read them.
+sparse_fields:
+  supported: true
+  param: _fields
+  detail: >-
+    A comma-separated `_fields` list trims the response to the named
+    properties. Verified: GET /wp/v2/product?per_page=1&_fields=id,slug,link
+    returned a 180-byte body against a multi-kilobyte default representation.
+  embedding:
+    param: _embed
+    detail: WordPress core convention; related resources are inlined under `_embedded`.
+filtering:
+  detail: >-
+    Collections accept search, slug, include, exclude, before/after,
+    modified_before/modified_after, order, orderby, status and per-taxonomy
+    filters. GET /wp/v2/recipe declares 20 query arguments and
+    GET /wp/v2/product declares its five csc_* taxonomy filters, each with
+    matching `_exclude` variants and a `tax_relation` combinator.
+  source: discovery/campbells-wp-v2-routes.json
+search:
+  detail: >-
+    The dedicated search surface is /wp-json/yrsc-search/v1 — `query` (term,
+    limit, offset, sort, filters, facetFilters, retrieveFacets, vertical, mode),
+    `autocomplete` (term required; limit, vertical, mode) and
+    `featured-collections` (no arguments). Responses are Yext-backed: each hit
+    carries a `raw.data` block with a `ce_recipe` entity.
+versioning:
+  style: namespace-in-path
+  detail: >-
+    Version lives in the namespace segment — /wp-json/wp/v2, /wp-json/yrsc-search/v1,
+    /wp-json/email-sub/v1. No version header, no version negotiation, and no
+    published policy for moving between versions.
+  see: lifecycle/campbells-lifecycle.yml
+error_envelope:
+  format: wordpress-rest
+  rfc9457: false
+  shape: '{"code": "<string>", "message": "<human string>", "data": {"status": <int>, ...}}'
+  content_type: application/json; charset=UTF-8
+  note: >-
+    Not RFC 9457. `data.status` repeats the HTTP status; parameter errors add
+    `data.params` and `data.details` with a per-parameter explanation.
+  see: errors/campbells-problem-types.yml
+rate_limit_signaling:
+  headers_returned: []
+  detail: >-
+    No RateLimit-*, X-RateLimit-* or Retry-After header was returned on any
+    response, including on rapid repeat requests. Cloudflare fronts the origin
+    (server: cloudflare, cf-ray, cf-cache-status) and the WordPress cache layer
+    reports x-cacheable / x-cache / x-cache-group, but nothing tells a client
+    what its budget is or when to retry.
+  see: rate-limits/campbells-rate-limits.yml
+caching:
+  headers_returned:
+    - x-cacheable
+    - x-cache
+    - x-cache-group
+    - cf-cache-status
+  detail: >-
+    Collection responses are marked x-cacheable: SHORT and served HIT or MISS
+    from an edge cache. No ETag or Last-Modified was returned, so conditional
+    requests are not available.
+cors:
+  access_control_allow_origin: reflects the request Origin
+  access_control_allow_credentials: true
+  access_control_allow_methods: OPTIONS, GET, POST, PUT, PATCH, DELETE
+  access_control_allow_headers: Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type
+  access_control_expose_headers: X-WP-Total, X-WP-TotalPages, Link
+  note: >-
+    Observed on an OPTIONS preflight with Origin: https://example.com — the
+    origin was echoed back with credentials allowed. Recorded as measured
+    behaviour; the read surface it fronts is public content.
+request_id_tracing:
+  supported: false
+  detail: >-
+    No request-id or correlation header is returned. Cloudflare's cf-ray is the
+    only per-request identifier and it is an edge artifact, not an API one.
+metadata:
+  supported: false
+  detail: No customer-writable metadata surface; this is a read API over editorial content.
+idempotency:
+  coverage: none
+  mechanism: none
+  header: null
+  scope: []
+  detail: >-
+    No Idempotency-Key or equivalent replay-protection mechanism is documented
+    or advertised on any response. The public surface is read-only (GET), so
+    there is nothing for an agent to double-fire there; the mutating routes that
+    do exist — POST /wp/v2/<type>, and the email-sub/v1 subscribe and preference
+    writes — carry no replay protection and no documented retry semantics.
+    Recorded as `none` rather than `na` because a mutating surface does exist.
+reversibility:
+  grade: none
+  detail: >-
+    Campbell's publishes no reversal operation and no window for one. The public
+    read surface has nothing to reverse. The one mutating surface an outside
+    caller can reach anonymously is POST /wp-json/email-sub/v1/emailsubscribe;
+    its sibling /emailpreference accepts GET, POST, PUT and PATCH on an email
+    address and is the de-facto correction path, but no documentation states
+    what it undoes or within what window, so no window is asserted here.
+  write_surfaces:
+    - operation: POST /wp-json/email-sub/v1/emailsubscribe
+      reversal: null
+      window: null
+      note: >-
+        /wp-json/email-sub/v1/emailpreference (POST/PUT/PATCH) mutates the same
+        subscription record and is the plausible reversal path, but nothing
+        published states that, so it is not recorded as one.
+    - operation: POST /wp-json/wp/v2/<post-type>
+      reversal: null
+      window: null
+      note: Authenticated editorial write; no outside caller can obtain a credential.
+dry_run_mode:
+  supported: false
+  detail: No dry-run, preview or validate-only mode is offered on any endpoint.
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
