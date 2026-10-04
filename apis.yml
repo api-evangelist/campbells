@@ -36,9 +36,9 @@ tags:
   - Recipes
   - Brands
   - Nutrition
-  - Content
   - Product Catalog
   - WordPress
+  - Food and Beverage
 access: 3rd-Party
 created: '2026-03-21'
 modified: '2026-09-05'
@@ -57,92 +57,45 @@ description: >-
   on — plus a separately-hosted corporate content API. There is no developer
   portal, no documentation, no contract and no terms governing any of it.
 apis:
-  - aid: campbells:campbells-content-api
-    name: Campbell's Content API
-    description: >-
-      The public WordPress REST API behind www.campbells.com, exposing
-      Campbell's own content types — recipe (316), product (210),
-      external_product and csc_faq (36) — together with six Campbell's
-      taxonomies covering recipe collections, product category, product line,
-      product tag, main ingredient and dietary alternative. Every read endpoint
-      answers anonymously with no key. Campbell's publishes no OpenAPI and no
-      documentation for it; the route descriptor and per-resource JSON Schema
-      captured in this repo were fetched from the API itself.
-    humanURL: https://www.campbells.com/
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/campbells.png
-    baseURL: https://www.campbells.com/wp-json/wp/v2
+  - aid: campbells:campbells-com-website-wordpress-rest
+    name: Campbell's Website (WordPress REST, www.campbells.com)
+    description: 'The public WordPress REST API (wp-json) of the Campbell''s website at www.campbells.com:
+      the route index of the site''s content management system, catalogued as one site surface rather than
+      as separate APIs.'
+    baseURL: https://www.campbells.com/wp-json
     tags:
-      - Recipes
-      - Product
-      - Nutrition
-      - Content
-    tags_raw:
-      - Recipes
-      - Products
-      - Nutrition
-      - Content
+    - WordPress
+    x-surface: platform-generated
     properties:
-      - type: JSONSchema
-        url: json-schema/_index.yml
-      - type: x-RouteDescriptor
-        url: discovery/campbells-wp-v2-routes.json
-      - type: DataModel
-        url: data-model/campbells-data-model.yml
-      - type: AgentSkill
-        url: skills/campbells-product-catalog.md
-  - aid: campbells:campbells-recipe-search-api
-    name: Campbell's Recipe Search API
-    description: >-
-      The yrsc-search/v1 namespace on www.campbells.com that powers the site's
-      recipe and product search. Three public endpoints — query (term, limit,
-      offset, sort, filters, facetFilters, retrieveFacets, vertical, mode),
-      autocomplete (term required) and featured-collections. Responses are
-      Yext-backed, returning flattened recipe summaries with times and servings
-      alongside the raw ce_recipe entity. No credential required and no
-      documentation published.
-    humanURL: https://www.campbells.com/all-recipes/
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/campbells.png
-    baseURL: https://www.campbells.com/wp-json/yrsc-search/v1
+    - type: Documentation
+      url: https://www.campbells.com/wp-json
+    x-platform: wordpress
+    x-platform-surface: rest
+  - aid: campbells:thecampbellscompany-com-website-wordpress-rest
+    name: Campbell's Website (WordPress REST, www.thecampbellscompany.com)
+    description: 'The public WordPress REST API (wp-json) of the Campbell''s website at www.thecampbellscompany.com:
+      the route index of the site''s content management system, catalogued as one site surface rather than
+      as separate APIs.'
+    baseURL: https://www.thecampbellscompany.com/wp-json
     tags:
-      - Search
-      - Recipes
-      - Autocomplete
-    tags_raw:
-      - Search
-      - Recipes
-      - Autocomplete
+    - WordPress
+    x-surface: platform-generated
     properties:
-      - type: x-RouteDescriptor
-        url: discovery/campbells-yrsc-search-v1-routes.json
-      - type: AgentSkill
-        url: skills/campbells-recipe-search.md
-  - aid: campbells:thecampbellscompany-content-api
-    name: The Campbell's Company Corporate Content API
-    description: >-
-      The public WordPress REST API behind the corporate site
-      www.thecampbellscompany.com, carrying csc_faq, csc_person and csc_resource
-      content types with csc_brand, csc_person_group, csc_resource_cat and
-      csc_topic taxonomies. Same posture as the consumer surface — live,
-      anonymous, undocumented.
-    humanURL: https://www.thecampbellscompany.com/
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/campbells.png
-    baseURL: https://www.thecampbellscompany.com/wp-json/wp/v2
-    tags:
-      - Corporate
-      - Content
-      - People
-    tags_raw:
-      - Corporate
-      - Content
-      - People
-    properties:
-      - type: x-RouteDescriptor
-        url: discovery/thecampbellscompany-wp-v2-routes.json
+    - type: Documentation
+      url: https://www.thecampbellscompany.com/wp-json
+    x-platform: wordpress
+    x-platform-surface: rest
 common:
   - type: Website
     url: https://www.campbells.com/
   - type: ParentCompany
     url: https://www.thecampbellscompany.com/
+  - type: Investor Relations
+    url: https://investor.thecampbellscompany.com/
+  - type: Newsroom
+    url: https://www.thecampbellscompany.com/newsroom/
+  - type: Careers
+    url: https://careers.thecampbellscompany.com/
   - type: LinkedIn
     url: https://www.linkedin.com/company/the-campbells-company
   - type: x-Recipes
@@ -183,6 +136,10 @@ common:
     url: discovery/campbells-discovery.yml
   - type: DomainSecurity
     url: security/campbells-domain-security.yml
+  - type: AgentSkill
+    url: skills/campbells-product-catalog.md
+  - type: AgentSkill
+    url: skills/campbells-recipe-search.md
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
