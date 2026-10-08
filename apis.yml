@@ -86,6 +86,8 @@ apis:
     x-platform: wordpress
     x-platform-surface: rest
 common:
+  - type: FinOps
+    url: finops/campbells-finops.yml
   - type: Website
     url: https://www.campbells.com/
   - type: ParentCompany
