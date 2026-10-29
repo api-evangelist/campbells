@@ -1,4 +1,4 @@
-# Campbell's (campbells)
+# Campbell's
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,113 +66,119 @@
 
 Campbell's (Campbell Soup Company, now The Campbell's Company) is the consumer brand trusted for generations to provide authentic, flavourful, and readily available soups, meals, and recipes. It ran a Campbell's Kitchen Developer API that let developers embed Campbell's, Swanson, Pace, Prego and Pepperidge Farm recipes, products, nutrition and UPC data into their own applications; that programme has been retired and its developer domain no longer resolves. What Campbell's still serves is a live, public, unauthenticated content and recipe-search API on www.campbells.com — 316 recipes, 210 products, 85 recipe collections and 36 FAQs behind the WordPress REST namespaces the site is built on — plus a separately-hosted corporate content API. There is no developer portal, no documentation, no contract and no terms governing any of it.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/campbells/refs/heads/main/apis.yml)
+**Areas:** Food · Consumer Packaged Goods · Recipes · Brands · Nutrition · Product Catalog · WordPress · Food and Beverage
 
-## Scope
+## Campbell's on APIs.io
 
-- **Type:** Index
-- **Position:** Producing
-- **Access:** 3rd-Party
+Everything profiled for Campbell's is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/campbells/](https://apis.io/providers/campbells/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (2)
 
- - Food, Consumer Packaged Goods, Recipes, Brands, Nutrition, Content, Product Catalog, WordPress
+- [Campbell's Website (WordPress REST, www.campbells.com)](https://apis.io/apis/campbells/campbells-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Campbell's website at www.campbells.com: the route index of the site's content management system, catalogued…
+- [Campbell's Website (WordPress REST, www.thecampbellscompany.com)](https://apis.io/apis/campbells/thecampbellscompany-com-website-wordpress-rest/) — The public WordPress REST API (wp-json) of the Campbell's website at www.thecampbellscompany.com: the route index of the site's content management system,…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-21
-- **Modified:** 2026-09-05
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### MCP servers (1)
 
-### Campbell's Content API
+Model Context Protocol servers that expose the API to agents.
 
-The public WordPress REST API behind www.campbells.com, exposing Campbell's own content types — recipe (316), product (210), external_product and csc_faq (36) — together with six Campbell's taxonomies covering recipe collections, product category, product line, product tag, main ingredient and dietary alternative. Every read endpoint answers anonymously with no key. Campbell's publishes no OpenAPI and no documentation for it; the route descriptor and per-resource JSON Schema captured in this repo were fetched from the API itself.
+- [campbells-mcp.yml](https://apis.io/servers/campbells/campbells-mcp-yml/)
 
-**Human URL:** [https://www.campbells.com/](https://www.campbells.com/)
+#### JSON Schema (4)
 
-**Base URL:** `https://www.campbells.com/wp-json/wp/v2`
+The data models the API reads and writes.
 
-#### Tags
+- [csc_faq](https://apis.io/schemas/campbells/campbells-csc-faq/)
+- [external_product](https://apis.io/schemas/campbells/campbells-external-product/)
+- [product](https://apis.io/schemas/campbells/campbells-product/)
+- [recipe](https://apis.io/schemas/campbells/campbells-recipe/)
 
- - Recipes, Products, Nutrition, Content
+#### Security (2)
 
-#### Properties
+Authentication, trust centre, and vulnerability disclosure.
 
-- [JSONSchema](json-schema/_index.yml)
-- [x-RouteDescriptor](discovery/campbells-wp-v2-routes.json)
-- [DataModel](data-model/campbells-data-model.yml)
-- [AgentSkill](skills/campbells-product-catalog.md)
+- [Campbells Authentication](https://apis.io/security/campbells/campbells-authentication/)
+- [Campbells Domain Security](https://apis.io/security/campbells/campbells-domain-security/)
 
-### Campbell's Recipe Search API
+#### Plans and pricing (1)
 
-The yrsc-search/v1 namespace on www.campbells.com that powers the site's recipe and product search. Three public endpoints — query (term, limit, offset, sort, filters, facetFilters, retrieveFacets, vertical, mode), autocomplete (term required) and featured-collections. Responses are Yext-backed, returning flattened recipe summaries with times and servings alongside the raw ce_recipe entity. No credential required and no documentation published.
+Published plans, tiers and prices.
 
-**Human URL:** [https://www.campbells.com/all-recipes/](https://www.campbells.com/all-recipes/)
+- [Campbells Plans Pricing](https://apis.io/plans/campbells/campbells-plans-pricing/)
 
-**Base URL:** `https://www.campbells.com/wp-json/yrsc-search/v1`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
- - Search, Recipes, Autocomplete
+- [Campbells Rate Limits](https://apis.io/rate-limits/campbells/campbells-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [x-RouteDescriptor](discovery/campbells-yrsc-search-v1-routes.json)
-- [AgentSkill](skills/campbells-recipe-search.md)
+What the API costs to run, by operation.
 
-### The Campbell's Company Corporate Content API
+- [Campbells Finops](https://apis.io/finops/campbells/campbells-finops/)
 
-The public WordPress REST API behind the corporate site www.thecampbellscompany.com, carrying csc_faq, csc_person and csc_resource content types with csc_brand, csc_person_group, csc_resource_cat and csc_topic taxonomies. Same posture as the consumer surface — live, anonymous, undocumented.
+## Where to find this API
 
-**Human URL:** [https://www.thecampbellscompany.com/](https://www.thecampbellscompany.com/)
-
-**Base URL:** `https://www.thecampbellscompany.com/wp-json/wp/v2`
-
-#### Tags
-
- - Corporate, Content, People
-
-#### Properties
-
-- [x-RouteDescriptor](discovery/thecampbellscompany-wp-v2-routes.json)
-
-## Common Properties
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
 - [Website](https://www.campbells.com/)
-- [ParentCompany](https://www.thecampbellscompany.com/)
-- [LinkedIn](https://www.linkedin.com/company/the-campbells-company)
-- [x-Recipes](https://www.campbells.com/recipes/)
-- [x-Products](https://www.campbells.com/products/)
 - [Support](https://www.campbells.com/contact-us/)
-- [HelpCenter](https://www.campbells.com/faqs/)
-- [TermsOfService](https://www.thecampbellscompany.com/terms-of-use/)
-- [PrivacyPolicy](https://www.thecampbellscompany.com/privacy-policy/)
-- [LLMsTxt](llms/campbells-llms.txt)
-- [Authentication](authentication/campbells-authentication.yml)
-- [Conventions](conventions/campbells-conventions.yml)
-- [ErrorCatalog](errors/campbells-problem-types.yml)
-- [Lifecycle](lifecycle/campbells-lifecycle.yml)
-- [Conformance](conformance/campbells-conformance.yml)
-- [DataModel](data-model/campbells-data-model.yml)
-- [RateLimits](rate-limits/campbells-rate-limits.yml)
-- [Plans](plans/campbells-plans-pricing.yml)
-- [Packages](packages/campbells-packages.yml)
-- [AgentSkill](skills/_index.yml)
-- [x-Discovery](discovery/campbells-discovery.yml)
-- [DomainSecurity](security/campbells-domain-security.yml)
+- [Terms of service](https://www.thecampbellscompany.com/terms-of-use/)
+- [Privacy policy](https://www.thecampbellscompany.com/privacy-policy/)
 
-## Enrichment
+## API Evangelist rating
 
-Campbell's retired the Campbell's Kitchen Developer API — `developer.campbellskitchen.com` no
-longer resolves in DNS. It does still serve a live, public, unauthenticated content and
-recipe-search API on its own consumer and corporate sites, with no portal, no documentation,
-no OpenAPI, no plan and no terms. The route descriptors and JSON Schema documents in
-`discovery/` and `json-schema/` were fetched from that API itself and are saved verbatim;
-everything derived from them says so in its own `method:` field.
+**Kin Score 20.0** — emerging · rubric 0.24.0 · scored 2026-10-17
 
-## Maintainers
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 0.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 0.0 |
+| Developer ergonomics | 28.0 |
+| Access clarity | 21.1 |
 
-**FN:** Kin Lane
+**Agent readiness 8.8** — agent-aware
 
-**Email:** kin@apievangelist.com
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | — |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 24.5** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/campbells/](https://apis.io/providers/campbells/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Campbell's: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/campbells/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
