@@ -11,6 +11,9 @@ artifacts:
   conventions/campbells-conventions.yml:
     method: unknown
     evidence: no authorship recorded
+  data-license/campbells-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/campbells-data-model.yml:
     method: derived
     evidence: declared in the artifact
@@ -29,6 +32,9 @@ artifacts:
   discovery/thecampbellscompany-wp-v2-routes.json:
     method: unknown
     evidence: no authorship recorded
+  eligibility/campbells-eligibility.yml:
+    method: harvested
+    evidence: declared in the artifact
   errors/campbells-problem-types.yml:
     method: unknown
     evidence: no authorship recorded
@@ -59,7 +65,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -125,6 +131,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/campbells-lifecycle.yml:
     method: unknown
     evidence: no authorship recorded
@@ -140,6 +149,9 @@ artifacts:
   plans/campbells-plans-pricing.yml:
     method: searched
     evidence: declared in the artifact
+  privacy/campbells-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/campbells-rate-limits.yml:
     method: unknown
     evidence: no authorship recorded
@@ -154,6 +166,9 @@ artifacts:
     evidence: declared in the artifact
   skills/campbells-recipe-search.md:
     method: generated
+    evidence: declared in the artifact
+  terms/campbells-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   well-known/campbells-well-known.yml:
     method: unknown
